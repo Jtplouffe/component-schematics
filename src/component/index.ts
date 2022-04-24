@@ -30,9 +30,7 @@ export function component(options: Schema): Rule {
             template({
                 ...options,
                 ...strings,
-                prefix: extractPrefix(tree),
-                dasherizedName: strings.dasherize(options.name),
-                classifierName: strings.classify(options.name)
+                prefix: extractPrefix(tree)
             })
         ]);
 
