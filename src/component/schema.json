@@ -1,0 +1,29 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "ComponentSchema",
+    "title": "Component",
+    "type": "object",
+    "description": "A component",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "The component's name",
+            "x-prompt": "Name (UpperCamelCase)",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            }
+        },
+        "stylesheet": {
+            "type": "boolean",
+            "description": "Wether to create a scss stylesheet or not",
+            "x-prompt": "Create a stylesheet?"
+        },
+        "store": {
+            "type": "boolean",
+            "description": "Wether to create a store or not",
+            "x-prompt": "Create a store?"
+        }
+    },
+    "required": ["name"]
+}
