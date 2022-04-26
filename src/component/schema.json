@@ -7,21 +7,32 @@
     "properties": {
         "name": {
             "type": "string",
-            "description": "The component's name",
+            "description": "The component's name.",
             "x-prompt": "Name (UpperCamelCase)",
             "$default": {
                 "$source": "argv",
                 "index": 0
             }
         },
+        "path": {
+            "type": "string",
+            "format": "path",
+            "description": "The path to create the component.",
+            "visible": false
+        },
+        "prefix": {
+            "type": "string",
+            "description": "The app's prefix",
+            "visible": false
+        },
         "stylesheet": {
             "type": "boolean",
-            "description": "Wether to create a scss stylesheet or not",
+            "description": "Wether to create a scss stylesheet or not.",
             "x-prompt": "Create a stylesheet?"
         },
         "store": {
             "type": "boolean",
-            "description": "Wether to create a store or not",
+            "description": "Wether to create a store or not.",
             "x-prompt": "Create a store?"
         }
     },
