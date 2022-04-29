@@ -20,10 +20,15 @@
             "description": "The path to create the component.",
             "visible": false
         },
-        "prefix": {
-            "type": "string",
-            "description": "The app's prefix",
-            "visible": false
+        "form": {
+            "type": "boolean",
+            "description": "Wether to create a form an inject it.",
+            "x-prompt": "Is this component a form?"
+        },
+        "modal": {
+            "type": "boolean",
+            "description": "Wether to this component is a modal. If true, it will create a data class, a directive and inject the data in the component.",
+            "x-prompt": "Is this component a modal?"
         },
         "stylesheet": {
             "type": "boolean",
