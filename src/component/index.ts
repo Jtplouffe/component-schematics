@@ -8,61 +8,21 @@ import {
     SchematicContext,
     template,
     Tree,
-    url
+    url,
 } from "@angular-devkit/schematics";
+import { Config, Schema } from "./config";
 
-export interface Schema {
-    name: string;
-    path: string;
-    stylesheet: boolean;
-    store: boolean;
-    prefix: string;
-}
-
-function loadWorkspace(tree: Tree): any {
-    const workspaceConfig = tree.read("/angular.json");
-    if (!workspaceConfig) return;
-
-    const workspaceContent = workspaceConfig.toString();
-    return JSON.parse(workspaceContent);
-}
-
-function getProject(workspace: any): any {
-    const projectName = workspace.defaultProject;
-    if (!projectName) return;
-
-    return workspace.project?.[projectName];
-}
-
-function configureOptions(options: Schema, tree: Tree): void {
-    const workspace = loadWorkspace(tree);
-    if (!workspace) return;
-
-    const project = getProject(workspace);
-    if (!project) return;
-
-    options.prefix = project.prefix;
-
-    if (options.path === undefined) {
-        // https://github.com/angular/angular-cli/blob/94288c7414b79432c12c21947320a549c1752266/packages/schematics/angular/utility/workspace.ts#L76
-        const root = project.sourceRoot
-            ? `/${project.sourceRoot}/`
-            : `/${project.root}/src/`;
-        const projectDirName =
-            project.extensions["projectType"] === "application" ? "app" : "lib";
-        options.path = `${root}${projectDirName}`;
-    }
-}
-
-export function component(options: Schema): Rule {
+export function component(schema: Schema): Rule {
     return (tree: Tree, _context: SchematicContext) => {
-        configureOptions(options, tree);
+        const config = new Config(schema, tree);
 
         const sourceTemplates = url("./files");
 
         const sourceParametrizedTemplates = apply(sourceTemplates, [
             filter((path) => {
-                if (path.endsWith(".style.scss") && !options.stylesheet) {
+                // TODO: make clean
+
+                if (path.endsWith(".style.scss") && !config.stylesheet) {
                     return false;
                 }
 
@@ -72,7 +32,7 @@ export function component(options: Schema): Rule {
                         ".service.ts",
                         ".store.ts",
                     ]) &&
-                    !options.store
+                    !config.store
                 ) {
                     return false;
                 }
@@ -80,10 +40,10 @@ export function component(options: Schema): Rule {
                 return true;
             }),
             template({
-                ...options,
+                ...config,
                 ...strings,
             }),
-            move(options.path),
+            move(config.path),
         ]);
 
         return mergeWith(sourceParametrizedTemplates);
