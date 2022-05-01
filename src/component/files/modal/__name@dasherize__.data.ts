@@ -1,3 +1,3 @@
-export interface <%= classifyWithSuffix(name, "Data") %> {
+export interface <%= classify(name) %>Data {
     
 }

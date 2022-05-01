@@ -2,7 +2,8 @@ import { Component<% if (modal) { %>, Inject<% } %>, ViewEncapsulation } from "@
 import { <%= classify(name) %>Service } from "./store/<%= dasherize(name) %>.service";
 import { <%= classify(name) %>Query } from "./store/<%= dasherize(name) %>.query";<% } if (modal) { %>
 import { <%= classifyWithSuffix(name, "Data") %> } from "./<%= dasherize(name) %>.data";
-import { GeneratedFormGroup, NgxFormGeneratorProvider } from "@recursyve/ngx-form-generator";<% }  if (form) {%>
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";<% }  if (form) {%>
+import { GeneratedFormGroup, NgxFormGeneratorProvider } from "@recursyve/ngx-form-generator";
 import { <%= classifyWithSuffix(name, "Form") %> } from "./<%= dasherize(name) %>.form";<% } %>
 
 @Component({
@@ -15,10 +16,11 @@ import { <%= classifyWithSuffix(name, "Form") %> } from "./<%= dasherize(name) %
 export class <%= classify(name) %>Component {
     <% if (store) { %>public loading$ = this.query.selectLoading();
 
-    constructor(<% if (modal) { %>
-        @Inject(MAT_DIALOG_DATA) public data: <%= classifyWithSuffix(name, "Data") %>,<% } if (form) { %>
-        private formGroup: GeneratedFormGroup<<%= classifyWithSuffix(name, "Form") %>>,<% } %>
+    <% } if (store || form || modal) { %>constructor(<% if (modal) { %>
+        @Inject(MAT_DIALOG_DATA) public data: <%= classifyWithSuffix(name, "Data") %>,
+        private matDialogRef: MatDialogRef<<%= classify(name) %>Component>,<% } if (form) { %>
+        public formGroup: GeneratedFormGroup<<%= classifyWithSuffix(name, "Form") %>>,<% } if (store) { %>
         private service: <%= classify(name) %>Service,
-        private query: <%= classify(name) %>Query,
+        private query: <%= classify(name) %>Query,<% } %>
     ) {}<% } %>
 }

@@ -35,7 +35,7 @@ export class Config implements Schema {
     }
 
     public get path(): string {
-        return this.schema.path ?? this.projectSourcePath;
+        return this.schema.path ?? this.projectSourcePath ?? "";
     }
 
     public get form(): boolean {
