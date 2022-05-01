@@ -1,95 +1,89 @@
 import { strings } from "@angular-devkit/core";
 import {
     apply,
-    filter,
-    mergeWith,
+    chain, mergeWith,
     move,
     Rule,
     SchematicContext,
+    Source,
     template,
     Tree,
     url
 } from "@angular-devkit/schematics";
+import { Config, Schema } from "./config";
 
-export interface Schema {
-    name: string;
-    path: string;
-    stylesheet: boolean;
-    store: boolean;
-    prefix: string;
-}
-
-function loadWorkspace(tree: Tree): any {
-    const workspaceConfig = tree.read("/angular.json");
-    if (!workspaceConfig) return;
-
-    const workspaceContent = workspaceConfig.toString();
-    return JSON.parse(workspaceContent);
-}
-
-function getProject(workspace: any): any {
-    const projectName = workspace.defaultProject;
-    if (!projectName) return;
-
-    return workspace.project?.[projectName];
-}
-
-function configureOptions(options: Schema, tree: Tree): void {
-    const workspace = loadWorkspace(tree);
-    if (!workspace) return;
-
-    const project = getProject(workspace);
-    if (!project) return;
-
-    options.prefix = project.prefix;
-
-    if (options.path === undefined) {
-        // https://github.com/angular/angular-cli/blob/94288c7414b79432c12c21947320a549c1752266/packages/schematics/angular/utility/workspace.ts#L76
-        const root = project.sourceRoot
-            ? `/${project.sourceRoot}/`
-            : `/${project.root}/src/`;
-        const projectDirName =
-            project.extensions["projectType"] === "application" ? "app" : "lib";
-        options.path = `${root}${projectDirName}`;
-    }
-}
-
-export function component(options: Schema): Rule {
+export function component(schema: Schema): Rule {
     return (tree: Tree, _context: SchematicContext) => {
-        configureOptions(options, tree);
+        const config = new Config(schema, tree);
 
-        const sourceTemplates = url("./files");
+        const templateSources = buildTemplateSources(config);
 
-        const sourceParametrizedTemplates = apply(sourceTemplates, [
-            filter((path) => {
-                if (path.endsWith(".style.scss") && !options.stylesheet) {
-                    return false;
-                }
-
-                if (
-                    stringEndsWithAny(path, [
-                        ".query.ts",
-                        ".service.ts",
-                        ".store.ts",
-                    ]) &&
-                    !options.store
-                ) {
-                    return false;
-                }
-
-                return true;
-            }),
-            template({
-                ...options,
-                ...strings,
-            }),
-            move(options.path),
-        ]);
-
-        return mergeWith(sourceParametrizedTemplates);
+        return chain(templateSources.map(mergeWith));
     };
 }
 
-function stringEndsWithAny(source: string, searchStrings: string[]): boolean {
-    return searchStrings.some((searchString) => source.endsWith(searchString));
+function buildTemplateSources(config: Config): Source[] {
+    const templateOptions = {
+        ...config.templateOptions(),
+        ...strings,
+        classifyWithSuffix,
+        camelizeWithSuffix
+    };
+
+    const baseDest = `${config.path}/${strings.dasherize(config.name)}`;
+
+    const sources = [
+        apply(url("./files/component"), [
+            template(templateOptions),
+            move(baseDest),
+        ]),
+    ];
+
+    if (config.stylesheet) {
+        sources.push(
+            apply(url("./files/stylesheet"), [
+                template(templateOptions),
+                move(baseDest),
+            ])
+        );
+    }
+
+    if (config.store) {
+        sources.push(
+            apply(url("./files/store"), [
+                template(templateOptions),
+                move(`${baseDest}/store`)
+            ])
+        );
+    }
+
+    if (config.form) {
+        sources.push(
+            apply(url("./files/form"), [
+                template(templateOptions),
+                move(baseDest)
+            ])
+        );
+    }
+
+    if (config.modal) {
+        sources.push(
+            apply(url("./files/modal"), [
+                template(templateOptions),
+                move(baseDest)
+            ])
+        );
+    }
+
+    return sources;
+}
+
+function classifyWithSuffix(name: string, suffix: string): string {
+    if (name.toLowerCase().endsWith(suffix.toLowerCase())) return strings.classify(name);
+    return `${strings.classify(name)}${suffix}`;
+}
+
+function camelizeWithSuffix(name: string, suffix: string): string {
+    if (name.toLowerCase().endsWith(suffix.toLowerCase())) return strings.camelize(name);
+    return strings.camelize(`${name} ${suffix}`);
 }

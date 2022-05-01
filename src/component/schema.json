@@ -20,20 +20,29 @@
             "description": "The path to create the component.",
             "visible": false
         },
-        "prefix": {
-            "type": "string",
-            "description": "The app's prefix",
-            "visible": false
-        },
         "stylesheet": {
             "type": "boolean",
             "description": "Wether to create a scss stylesheet or not.",
+            "default": false,
             "x-prompt": "Create a stylesheet?"
         },
         "store": {
             "type": "boolean",
             "description": "Wether to create a store or not.",
+            "default": false,
             "x-prompt": "Create a store?"
+        },
+        "form": {
+            "type": "boolean",
+            "description": "Wether to create a form an inject it.",
+            "default": false,
+            "x-prompt": "Is this component a form?"
+        },
+        "modal": {
+            "type": "boolean",
+            "description": "Wether to this component is a modal. If true, it will create a data class, a directive and inject the data in the component.",
+            "default": false,
+            "x-prompt": "Is this component a modal?"
         }
     },
     "required": ["name"]
