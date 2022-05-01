@@ -3,10 +3,10 @@ import { Tree } from "@angular-devkit/schematics/src/tree/interface";
 export interface Schema {
     name: string;
     path: string;
-    form: boolean;
-    modal: boolean;
     stylesheet: boolean;
     store: boolean;
+    form: boolean;
+    modal: boolean;
 }
 
 export interface TemplateConfig extends Omit<Schema, "path"> {
@@ -54,7 +54,7 @@ export class Config implements Schema {
         return this.schema.store;
     }
 
-    public templateConfig(): TemplateConfig {
+    public templateOptions(): TemplateConfig {
         return {
             name: this.schema.name,
             prefix: this.project?.prefix,

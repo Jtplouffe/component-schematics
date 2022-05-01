@@ -19,7 +19,9 @@
     },
     "devDependencies": {
         "@angular/core": "^13.3.4",
+        "@angular/material": "^13.3.5",
         "@datorama/akita": "^7.1.1",
+        "@recursyve/ngx-form-generator": "^13.0.0-beta.27",
         "@schematics/angular": "^13.3.3",
         "@types/jasmine": "~3.10.0",
         "@types/node": "^12.11.1",
