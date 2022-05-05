@@ -1,4 +1,4 @@
-import { Component, Directive } from '@angular/core';
+import { Directive } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { <%= classify(name) %>Component } from "./<%= dasherize(name) %>.component";
 import { <%= classify(name) %>Data } from "./<%= dasherize(name) %>.data";
