@@ -5,7 +5,7 @@ export interface <%= classify(name) %>State {}
 
 const initialState: <%= classify(name) %>State = {};
 
-@StoreConfig({ name: "<%= dasherize(name) %>" })
+@StoreConfig({ name: "<%= dasherize(name) %>", resettable: true })
 @Injectable()
 export class <%= classify(name) %>Store extends Store<<%= classify(name) %>State> {
     constructor() {

@@ -85,5 +85,5 @@ function classifyWithSuffix(name: string, suffix: string): string {
 
 function camelizeWithSuffix(name: string, suffix: string): string {
     if (name.toLowerCase().endsWith(suffix.toLowerCase())) return strings.camelize(name);
-    return strings.camelize(`${name} ${suffix}`);
+    return strings.camelize(`${name}${suffix}`);
 }
