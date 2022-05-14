@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "DatabaseModuleSchema",
+    "title": "Database module",
+    "type": "object",
+    "description": "A database module",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "The database module's name.",
+            "x-prompt": "Name (UpperCamelCase)",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            }
+        },
+        "path": {
+            "type": "string",
+            "format": "path",
+            "description": "The path to create the database module.",
+            "visible": false
+        },
+        "controller": {
+            "type": "boolean",
+            "description": "Wether to create a controller or not.",
+            "default": false,
+            "x-prompt": "Create a controller?"
+        },
+        "service": {
+            "type": "boolean",
+            "description": "Wether to create a service or not.",
+            "default": false,
+            "x-prompt": "Create a service?"
+        },
+        "dto": {
+            "type": "boolean",
+            "description": "Wether to create a dto or not.",
+            "default": false,
+            "x-prompt": "Create a dto?"
+        }
+    },
+    "required": ["name"]
+}
