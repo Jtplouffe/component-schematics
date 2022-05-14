@@ -11,7 +11,7 @@ import {
     url
 } from "@angular-devkit/schematics";
 import { Config, Schema } from "./config";
-import { camelizeWithSuffix, classifyWithSuffix } from "../utils/case.utils";
+import { camelizeWithSuffix, classifyWithSuffix } from "../../utils/case.utils";
 
 export function store(schema: Schema): Rule {
     return (tree: Tree, _context: SchematicContext) => {

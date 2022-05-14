@@ -1,4 +1,4 @@
-import { BaseConfig } from "../common/base-config";
+import { BaseConfig } from "../../common/base-config";
 import { Tree } from "@angular-devkit/schematics/src/tree/interface";
 
 export interface Schema {
