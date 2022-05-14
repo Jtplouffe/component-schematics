@@ -3,8 +3,13 @@
     "schematics": {
         "component": {
             "description": "Creates a component",
-            "factory": "./component/index#component",
-            "schema": "./component/schema.json"
+            "factory": "./schematics/component/index#component",
+            "schema": "./schematics/component/schema.json"
+        },
+        "store": {
+            "description": "Creates a store",
+            "factory": "./schematics/store/index#store",
+            "schema": "./schematics/store/schema.json"
         }
     }
 }

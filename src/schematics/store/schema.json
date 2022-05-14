@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "$id": "StoreSchema",
+    "title": "Store",
+    "type": "object",
+    "description": "A store",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "The store's name.",
+            "x-prompt": "Name (UpperCamelCase)",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            }
+        },
+        "path": {
+            "type": "string",
+            "format": "path",
+            "description": "The path to create the store.",
+            "visible": false
+        }
+    },
+    "required": ["name"]
+}
