@@ -11,6 +11,7 @@ import {
     url
 } from "@angular-devkit/schematics";
 import { Config, Schema } from "./config";
+import { camelizeWithSuffix, classifyWithSuffix } from "../utils/case.utils";
 
 export function store(schema: Schema): Rule {
     return (tree: Tree, _context: SchematicContext) => {
@@ -33,14 +34,4 @@ function buildTemplateSource(config: Config): Source {
         template(templateOptions),
         move(`${config.path}/store`)
     ]);
-}
-
-function classifyWithSuffix(name: string, suffix: string): string {
-    if (name.toLowerCase().endsWith(suffix.toLowerCase())) return strings.classify(name);
-    return `${strings.classify(name)}${suffix}`;
-}
-
-function camelizeWithSuffix(name: string, suffix: string): string {
-    if (name.toLowerCase().endsWith(suffix.toLowerCase())) return strings.camelize(name);
-    return strings.camelize(`${name}${suffix}`);
 }
