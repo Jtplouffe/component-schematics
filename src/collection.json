@@ -5,6 +5,11 @@
             "description": "Creates a component",
             "factory": "./component/index#component",
             "schema": "./component/schema.json"
+        },
+        "store": {
+            "description": "Creates a store",
+            "factory": "./store/index#store",
+            "schema": "./store/schema.json"
         }
     }
 }
