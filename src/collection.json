@@ -10,6 +10,11 @@
             "description": "Creates a store",
             "factory": "./schematics/store/index#store",
             "schema": "./schematics/store/schema.json"
+        },
+        "database-module": {
+            "description": "Creates a database module",
+            "factory": "./schematics/database-module/index#databaseModule",
+            "schema": "./schematics/database-module/schema.json"
         }
     }
 }
