@@ -135,7 +135,7 @@ function getProviderDeclaration(providersArray: ts.Node, config: Config): string
 
 function getChildOfKind(node: ts.Node, kind: ts.SyntaxKind): ts.Node | undefined {
     return node.getChildren().find((child) => child.kind === kind);
-}, MyTestComponentQuery, MyTestComponentService, MyTestComponentSt
+}
 
 // Depth-first traversal of the ast, in order the find child in order of kinds
 function getNestedChildForTypes(node: ts.Node, kinds: ts.SyntaxKind[]): ts.Node | undefined {
