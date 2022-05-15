@@ -32,7 +32,7 @@ function buildTemplateSource(config: Config): Source {
         ...config.templateOptions(),
         ...strings,
         classifyWithSuffix,
-        camelizeWithSuffix,
+        camelizeWithSuffix
     };
 
     return apply(url("./files/store"), [template(templateOptions), move(`${config.path}/store`)]);
@@ -69,7 +69,7 @@ function getModuleDecoratorProvidersChange(ast: ts.Node, config: Config, moduleF
         ts.SyntaxKind.CallExpression,
         ts.SyntaxKind.SyntaxList,
         ts.SyntaxKind.ObjectLiteralExpression,
-        ts.SyntaxKind.SyntaxList,
+        ts.SyntaxKind.SyntaxList
     ]);
     if (!decoratorSyntaxList) return null;
 
