@@ -1,12 +1,13 @@
-import { BaseConfig } from "../../common/base-config";
 import { Tree } from "@angular-devkit/schematics/src/tree/interface";
+import { BaseConfig } from "../../common/base-config";
 
 export interface Schema {
     name: string;
     path: string;
+    addToModule: boolean;
 }
 
-export interface TemplateConfig extends Omit<Schema, "path"> {
+export interface TemplateConfig extends Omit<Schema, "path" | "addToModule"> {
     prefix?: string;
 }
 
@@ -17,6 +18,10 @@ export class Config extends BaseConfig implements Schema {
 
     public get path(): string {
         return this.schema.path ?? this.projectSourcePath ?? "";
+    }
+
+    public get addToModule(): boolean {
+        return this.schema.addToModule;
     }
 
     public templateOptions(): TemplateConfig {
