@@ -19,6 +19,11 @@
             "format": "path",
             "description": "The path to create the store.",
             "visible": false
+        },
+        "addToModule": {
+            "type": "boolean",
+            "description": "Wether to provide the query, service and store to the module",
+            "x-prompt": "Add to module's providers?"
         }
     },
     "required": ["name"]
