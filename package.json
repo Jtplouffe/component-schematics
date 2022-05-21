@@ -1,6 +1,6 @@
 {
     "name": "nicest-schematics",
-    "version": "0.0.0",
+    "version": "0.0.3",
     "description": "Nicest collection of schematics",
     "scripts": {
         "build": "tsc -p tsconfig.json",
@@ -9,8 +9,12 @@
     "keywords": [
         "schematics"
     ],
-    "author": "",
+    "author": "Jtplouffe",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Jtplouffe/nicest-schematics.git"
+    },
     "schematics": "./src/collection.json",
     "dependencies": {
         "@angular-devkit/core": "^13.3.3",
