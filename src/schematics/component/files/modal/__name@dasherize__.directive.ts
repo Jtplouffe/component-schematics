@@ -12,7 +12,8 @@ export class <%= classify(name) %>Directive extends NiceModalOnClickDirective<
 > {
     constructor(matDialog: MatDialog) {
         super(matDialog, <%= classify(name) %>Component, {
-            autoFocus: false
+            autoFocus: false,
+            restoreFocus: false
         });
     }
 }
