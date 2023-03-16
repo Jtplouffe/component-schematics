@@ -1,6 +1,6 @@
 {
     "name": "nicest-schematics",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "Nicest collection of schematics",
     "scripts": {
         "build": "tsc -p tsconfig.json",
